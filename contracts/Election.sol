@@ -11,6 +11,8 @@ contract Election {
     mapping(uint => Candidate) public candidates; // Store and fetch candidates
     uint public candidatesCount; // Store Candidates count
 
+    event votedEvent(uint indexed _candidateId);
+
     constructor() public {
         addCandidate("Candidate 1");
         addCandidate("Candidate 2");
@@ -28,5 +30,7 @@ contract Election {
         require(_candidateId > 0 && _candidateId <= candidatesCount, 'Candidate is not valid');
         voters[msg.sender] = true; // record that voter has voted
         candidates[_candidateId].voteCount++; // update candidate vote Count
+
+        emit votedEvent(_candidateId);
     }
 }
